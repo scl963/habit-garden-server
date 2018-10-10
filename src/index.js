@@ -90,8 +90,7 @@ const resolvers = {
 };
 
 const opts = {
-  port: 7777,
-  endpoint: '/graphql',
+  port: 4000,
 };
 
 let server = new GraphQLServer({
@@ -107,4 +106,4 @@ let server = new GraphQLServer({
     }),
   }),
 });
-server.start(opts => console.log(`Server is running on http://localhost:4000`));
+server.start(() => console.log(`Server is running on http://localhost:4000`));
