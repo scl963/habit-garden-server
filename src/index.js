@@ -89,10 +89,6 @@ const resolvers = {
   },
 };
 
-const opts = {
-  port: 4000,
-};
-
 let server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
