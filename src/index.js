@@ -5,8 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
 
-console.log(process.env);
-
 const resolvers = {
   Query: {
     users: (root, args, context, info) => {
@@ -104,4 +102,4 @@ let server = new GraphQLServer({
     }),
   }),
 });
-server.start({ port: 80 }, () => console.log(`Server is running on port 80`));
+server.start(() => console.log(`Server is running on port 80`));
