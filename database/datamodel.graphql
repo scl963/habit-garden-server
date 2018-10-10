@@ -1,0 +1,24 @@
+type User {
+  id: ID! @unique
+  password: String!
+  createdAt: DateTime!
+  email: String! @unique
+  firstName: String
+  habits: [Habit!]! @relation(name: "HabitsByUser", onDelete: CASCADE)
+}
+
+type Habit {
+  id: ID! @unique
+  createdAt: DateTime!
+  user: User! @relation(name: "HabitsByUser")
+  name: String!
+  inputs: [DailyInput!]! @relation(name: "InputsByHabit", onDelete: CASCADE)
+}
+
+type DailyInput {
+  id: ID! @unique
+  createdAt: DateTime!
+  habit: Habit! @relation(name: "InputsByHabit")
+  date: DateTime!
+  amount: Float!
+}

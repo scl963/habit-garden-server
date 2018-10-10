@@ -1,0 +1,18 @@
+# import * from "./generated/prisma.graphql"
+
+type Query {
+  user(userId: ID!): User!
+  users: [User!]
+  habit: Habit!
+  habits: [Habit!]
+  dailyInput: DailyInput
+  inputs: [DailyInput!]
+  _usersMeta: AggregateUser!
+  _habitsMeta: AggregateHabit!
+}
+
+type Mutation {
+  createUser(email: String!, firstName: String): User!
+  createHabitForUser(userId: ID!, name: String!): Habit!
+  createInputForHabit(habitId: ID!, date: DateTime!, amount: Float!): DailyInput!
+}

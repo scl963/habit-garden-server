@@ -1,0 +1,968 @@
+# source: https://habit-tracker-prisma-server.herokuapp.com
+# timestamp: Tue Oct 09 2018 19:02:43 GMT-0400 (EDT)
+
+type AggregateDailyInput {
+  count: Int!
+}
+
+type AggregateHabit {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type DailyInput implements Node {
+  id: ID!
+  createdAt: DateTime!
+  habit(where: HabitWhereInput): Habit!
+  date: DateTime!
+  amount: Float!
+}
+
+"""A connection to a list of items."""
+type DailyInputConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DailyInputEdge]!
+  aggregate: AggregateDailyInput!
+}
+
+input DailyInputCreateInput {
+  date: DateTime!
+  amount: Float!
+  habit: HabitCreateOneWithoutInputsInput!
+}
+
+input DailyInputCreateManyWithoutHabitInput {
+  create: [DailyInputCreateWithoutHabitInput!]
+  connect: [DailyInputWhereUniqueInput!]
+}
+
+input DailyInputCreateWithoutHabitInput {
+  date: DateTime!
+  amount: Float!
+}
+
+"""An edge in a connection."""
+type DailyInputEdge {
+  """The item at the end of the edge."""
+  node: DailyInput!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DailyInputOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  date_ASC
+  date_DESC
+  amount_ASC
+  amount_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type DailyInputPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  date: DateTime!
+  amount: Float!
+}
+
+type DailyInputSubscriptionPayload {
+  mutation: MutationType!
+  node: DailyInput
+  updatedFields: [String!]
+  previousValues: DailyInputPreviousValues
+}
+
+input DailyInputSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DailyInputSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DailyInputSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DailyInputSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DailyInputWhereInput
+}
+
+input DailyInputUpdateInput {
+  date: DateTime
+  amount: Float
+  habit: HabitUpdateOneWithoutInputsInput
+}
+
+input DailyInputUpdateManyWithoutHabitInput {
+  create: [DailyInputCreateWithoutHabitInput!]
+  connect: [DailyInputWhereUniqueInput!]
+  disconnect: [DailyInputWhereUniqueInput!]
+  delete: [DailyInputWhereUniqueInput!]
+  update: [DailyInputUpdateWithWhereUniqueWithoutHabitInput!]
+  upsert: [DailyInputUpsertWithWhereUniqueWithoutHabitInput!]
+}
+
+input DailyInputUpdateWithoutHabitDataInput {
+  date: DateTime
+  amount: Float
+}
+
+input DailyInputUpdateWithWhereUniqueWithoutHabitInput {
+  where: DailyInputWhereUniqueInput!
+  data: DailyInputUpdateWithoutHabitDataInput!
+}
+
+input DailyInputUpsertWithWhereUniqueWithoutHabitInput {
+  where: DailyInputWhereUniqueInput!
+  update: DailyInputUpdateWithoutHabitDataInput!
+  create: DailyInputCreateWithoutHabitInput!
+}
+
+input DailyInputWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DailyInputWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DailyInputWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DailyInputWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  date: DateTime
+
+  """All values that are not equal to given value."""
+  date_not: DateTime
+
+  """All values that are contained in given list."""
+  date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  date_lte: DateTime
+
+  """All values greater than the given value."""
+  date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  date_gte: DateTime
+  amount: Float
+
+  """All values that are not equal to given value."""
+  amount_not: Float
+
+  """All values that are contained in given list."""
+  amount_in: [Float!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Float!]
+
+  """All values less than the given value."""
+  amount_lt: Float
+
+  """All values less than or equal the given value."""
+  amount_lte: Float
+
+  """All values greater than the given value."""
+  amount_gt: Float
+
+  """All values greater than or equal the given value."""
+  amount_gte: Float
+  habit: HabitWhereInput
+}
+
+input DailyInputWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type Habit implements Node {
+  id: ID!
+  createdAt: DateTime!
+  user(where: UserWhereInput): User!
+  name: String!
+  inputs(where: DailyInputWhereInput, orderBy: DailyInputOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyInput!]
+}
+
+"""A connection to a list of items."""
+type HabitConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [HabitEdge]!
+  aggregate: AggregateHabit!
+}
+
+input HabitCreateInput {
+  name: String!
+  user: UserCreateOneWithoutHabitsInput!
+  inputs: DailyInputCreateManyWithoutHabitInput
+}
+
+input HabitCreateManyWithoutUserInput {
+  create: [HabitCreateWithoutUserInput!]
+  connect: [HabitWhereUniqueInput!]
+}
+
+input HabitCreateOneWithoutInputsInput {
+  create: HabitCreateWithoutInputsInput
+  connect: HabitWhereUniqueInput
+}
+
+input HabitCreateWithoutInputsInput {
+  name: String!
+  user: UserCreateOneWithoutHabitsInput!
+}
+
+input HabitCreateWithoutUserInput {
+  name: String!
+  inputs: DailyInputCreateManyWithoutHabitInput
+}
+
+"""An edge in a connection."""
+type HabitEdge {
+  """The item at the end of the edge."""
+  node: Habit!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum HabitOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type HabitPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+}
+
+type HabitSubscriptionPayload {
+  mutation: MutationType!
+  node: Habit
+  updatedFields: [String!]
+  previousValues: HabitPreviousValues
+}
+
+input HabitSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HabitSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HabitSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HabitSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: HabitWhereInput
+}
+
+input HabitUpdateInput {
+  name: String
+  user: UserUpdateOneWithoutHabitsInput
+  inputs: DailyInputUpdateManyWithoutHabitInput
+}
+
+input HabitUpdateManyWithoutUserInput {
+  create: [HabitCreateWithoutUserInput!]
+  connect: [HabitWhereUniqueInput!]
+  disconnect: [HabitWhereUniqueInput!]
+  delete: [HabitWhereUniqueInput!]
+  update: [HabitUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [HabitUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input HabitUpdateOneWithoutInputsInput {
+  create: HabitCreateWithoutInputsInput
+  connect: HabitWhereUniqueInput
+  delete: Boolean
+  update: HabitUpdateWithoutInputsDataInput
+  upsert: HabitUpsertWithoutInputsInput
+}
+
+input HabitUpdateWithoutInputsDataInput {
+  name: String
+  user: UserUpdateOneWithoutHabitsInput
+}
+
+input HabitUpdateWithoutUserDataInput {
+  name: String
+  inputs: DailyInputUpdateManyWithoutHabitInput
+}
+
+input HabitUpdateWithWhereUniqueWithoutUserInput {
+  where: HabitWhereUniqueInput!
+  data: HabitUpdateWithoutUserDataInput!
+}
+
+input HabitUpsertWithoutInputsInput {
+  update: HabitUpdateWithoutInputsDataInput!
+  create: HabitCreateWithoutInputsInput!
+}
+
+input HabitUpsertWithWhereUniqueWithoutUserInput {
+  where: HabitWhereUniqueInput!
+  update: HabitUpdateWithoutUserDataInput!
+  create: HabitCreateWithoutUserInput!
+}
+
+input HabitWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HabitWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HabitWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HabitWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  user: UserWhereInput
+  inputs_every: DailyInputWhereInput
+  inputs_some: DailyInputWhereInput
+  inputs_none: DailyInputWhereInput
+}
+
+input HabitWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  createHabit(data: HabitCreateInput!): Habit!
+  createDailyInput(data: DailyInputCreateInput!): DailyInput!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateHabit(data: HabitUpdateInput!, where: HabitWhereUniqueInput!): Habit
+  updateDailyInput(data: DailyInputUpdateInput!, where: DailyInputWhereUniqueInput!): DailyInput
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteHabit(where: HabitWhereUniqueInput!): Habit
+  deleteDailyInput(where: DailyInputWhereUniqueInput!): DailyInput
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertHabit(where: HabitWhereUniqueInput!, create: HabitCreateInput!, update: HabitUpdateInput!): Habit!
+  upsertDailyInput(where: DailyInputWhereUniqueInput!, create: DailyInputCreateInput!, update: DailyInputUpdateInput!): DailyInput!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyHabits(data: HabitUpdateInput!, where: HabitWhereInput): BatchPayload!
+  updateManyDailyInputs(data: DailyInputUpdateInput!, where: DailyInputWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyHabits(where: HabitWhereInput): BatchPayload!
+  deleteManyDailyInputs(where: DailyInputWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  habits(where: HabitWhereInput, orderBy: HabitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Habit]!
+  dailyInputs(where: DailyInputWhereInput, orderBy: DailyInputOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyInput]!
+  user(where: UserWhereUniqueInput!): User
+  habit(where: HabitWhereUniqueInput!): Habit
+  dailyInput(where: DailyInputWhereUniqueInput!): DailyInput
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  habitsConnection(where: HabitWhereInput, orderBy: HabitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HabitConnection!
+  dailyInputsConnection(where: DailyInputWhereInput, orderBy: DailyInputOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyInputConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  habit(where: HabitSubscriptionWhereInput): HabitSubscriptionPayload
+  dailyInput(where: DailyInputSubscriptionWhereInput): DailyInputSubscriptionPayload
+}
+
+type User implements Node {
+  id: ID!
+  password: String!
+  createdAt: DateTime!
+  email: String!
+  firstName: String
+  habits(where: HabitWhereInput, orderBy: HabitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Habit!]
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  password: String!
+  email: String!
+  firstName: String
+  habits: HabitCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutHabitsInput {
+  create: UserCreateWithoutHabitsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutHabitsInput {
+  password: String!
+  email: String!
+  firstName: String
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  password_ASC
+  password_DESC
+  createdAt_ASC
+  createdAt_DESC
+  email_ASC
+  email_DESC
+  firstName_ASC
+  firstName_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  password: String!
+  createdAt: DateTime!
+  email: String!
+  firstName: String
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateInput {
+  password: String
+  email: String
+  firstName: String
+  habits: HabitUpdateManyWithoutUserInput
+}
+
+input UserUpdateOneWithoutHabitsInput {
+  create: UserCreateWithoutHabitsInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutHabitsDataInput
+  upsert: UserUpsertWithoutHabitsInput
+}
+
+input UserUpdateWithoutHabitsDataInput {
+  password: String
+  email: String
+  firstName: String
+}
+
+input UserUpsertWithoutHabitsInput {
+  update: UserUpdateWithoutHabitsDataInput!
+  create: UserCreateWithoutHabitsInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  habits_every: HabitWhereInput
+  habits_some: HabitWhereInput
+  habits_none: HabitWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
