@@ -1,5 +1,10 @@
 # import * from "./generated/prisma.graphql"
 
+type AuthPayload {
+  token: String
+  user: User!
+}
+
 type Query {
   user(userId: ID!): User!
   users: [User!]
@@ -12,7 +17,8 @@ type Query {
 }
 
 type Mutation {
-  createUser(email: String!, firstName: String): User!
-  createHabitForUser(userId: ID!, name: String!): Habit!
+  createHabitForUser(name: String!): Habit!
   createInputForHabit(habitId: ID!, date: DateTime!, amount: Float!): DailyInput!
+  signup(email: String!, password: String!, firstName: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 }

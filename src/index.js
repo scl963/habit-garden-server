@@ -1,24 +1,27 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { Prisma } = require('prisma-binding');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
+}
+
+function getUserId(context) {
+  const Authorization = context.request.get('Authorization');
+  if (Authorization) {
+    const token = Authorization.replace('Bearer ', '');
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    return userId;
+  }
+
+  throw new Error('Not authenticated');
 }
 
 const resolvers = {
   Query: {
     users: (root, args, context, info) => {
       return context.db.query.users({}, info);
-    },
-    user: (root, args, context, info) => {
-      return context.db.query.user(
-        {
-          where: {
-            id: args.userId,
-          },
-        },
-        info,
-      );
     },
     habits: (root, args, context, info) => {
       return context.db.query.habits({}, info);
@@ -35,6 +38,11 @@ const resolvers = {
       return { count: data.aggregate.count };
     },
   },
+  AuthPayload: {
+    user: async (root, args, context, info) => {
+      return context.db.query.user({ where: { id: root.user.id } }, info);
+    },
+  },
   User: {
     id: root => root.id,
     email: root => root.email,
@@ -42,25 +50,51 @@ const resolvers = {
     habits: root => root.habits,
   },
   Mutation: {
-    createUser: (root, args, context, info) => {
-      return context.db.mutation.createUser(
+    signup: async (parent, args, context, info) => {
+      const password = await bcrypt.hash(args.password, 10);
+      const user = await context.db.mutation.createUser(
         {
           data: {
             email: args.email,
             firstName: args.firstName,
             habits: [],
+            password,
           },
         },
-        info,
+        ` { id password email } `,
       );
+      const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+      return {
+        token,
+        user,
+      };
+    },
+    login: async (parent, args, context, info) => {
+      const user = await context.db.query.user(
+        { where: { email: args.email } },
+        ` { id password } `,
+      );
+      if (!user) {
+        throw new Error('No such user found');
+      }
+      const valid = await bcrypt.compare(args.password, user.password);
+      if (!valid) {
+        throw new Error('Invalid password');
+      }
+      const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+      return {
+        token,
+        user,
+      };
     },
     createHabitForUser: (root, args, context, info) => {
+      const userId = getUserId(context);
       return context.db.mutation.createHabit(
         {
           data: {
             user: {
               connect: {
-                id: args.userId,
+                id: userId,
               },
             },
             name: args.name,
@@ -71,6 +105,7 @@ const resolvers = {
       );
     },
     createInputForHabit: (root, args, context, info) => {
+      const userId = getUserId(context);
       return context.db.mutation.createDailyInput(
         {
           data: {
@@ -102,4 +137,4 @@ let server = new GraphQLServer({
     }),
   }),
 });
-server.start(() => console.log(`Server is running on port 80`));
+server.start(() => console.log(`Server is running on port 3000`));

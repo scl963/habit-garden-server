@@ -1,5 +1,5 @@
 # The HTTP endpoint for your Prisma API
-#endpoint: ''
+
 endpoint: https://habit-tracker-prisma-server.herokuapp.com
 
 # Points to the file that holds your data model
