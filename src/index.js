@@ -131,10 +131,11 @@ let server = new GraphQLServer({
     ...req,
     db: new Prisma({
       typeDefs: 'src/generated/prisma.graphql',
-      endpoint: 'https://habit-tracker-prisma-server.herokuapp.com',
+      endpoint: '/graphql',
+      playground: '/playground',
       secret: process.env.API_SECRET,
       debug: true,
     }),
   }),
 });
-server.start(() => console.log(`Server is running on port 3000`));
+server.start(() => console.log(`Server is running on port 4000`));
