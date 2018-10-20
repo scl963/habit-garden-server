@@ -20,6 +20,9 @@ function getUserId(context) {
 
 const resolvers = {
   Query: {
+    user: (root, args, context, info) => {
+      return context.db.query.user({ where: { id: args.userId }}, info)
+    },
     users: (root, args, context, info) => {
       return context.db.query.users({}, info);
     },
