@@ -27,9 +27,11 @@ const resolvers = {
       return context.db.query.users({}, info);
     },
     habits: (root, args, context, info) => {
-      const userId = getUserId();
+      const userId = getUserId(context);
+      console.log(userId);
+      const where = { user: { id: userId } };
       return context.db.query.habits(
-        { where: { user: { id: userId } }, skip: args.skip, first: args.first, last: args.last },
+        { where, skip: args.skip, first: args.first, last: args.last },
         info,
       );
     },
