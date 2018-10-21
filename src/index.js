@@ -26,6 +26,9 @@ const resolvers = {
     users: (root, args, context, info) => {
       return context.db.query.users({}, info);
     },
+    user: (root, args, context, info) => {
+      return context.db.query.habit({ where: { id: args.habitId } }, info);
+    },
     habits: (root, args, context, info) => {
       const userId = getUserId(context);
       console.log(userId);

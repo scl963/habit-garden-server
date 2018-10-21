@@ -8,7 +8,7 @@ type AuthPayload {
 type Query {
   user(userId: ID!): User!
   users: [User!]
-  habit: Habit!
+  habit(habitId: ID!): Habit!
   habits(skip: Int, first: Int, last: Int): [Habit!]
   dailyInput: DailyInput
   inputs(skip: Int, first: Int, last: Int): [DailyInput!]
