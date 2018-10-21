@@ -21,16 +21,32 @@ function getUserId(context) {
 const resolvers = {
   Query: {
     user: (root, args, context, info) => {
-      return context.db.query.user({ where: { id: args.userId }}, info)
+      return context.db.query.user({ where: { id: args.userId } }, info);
     },
     users: (root, args, context, info) => {
       return context.db.query.users({}, info);
     },
     habits: (root, args, context, info) => {
-      return context.db.query.habits({}, info);
+      const where = args.filter
+        ? {
+            OR: [{ url_contains: args.filter }, { description_contains: args.filter }],
+          }
+        : {};
+      return context.db.query.habits(
+        { where, skip: args.skip, first: args.first, last: args.last },
+        info,
+      );
     },
     inputs: (root, args, context, info) => {
-      return context.db.query.dailyInputs({}, info);
+      const where = args.filter
+        ? {
+            OR: [{ url_contains: args.filter }, { description_contains: args.filter }],
+          }
+        : {};
+      return context.db.query.dailyInputs(
+        { where, skip: args.skip, first: args.first, last: args.last },
+        info,
+      );
     },
     _usersMeta: async (root, args, context, info) => {
       const data = await context.db.query.usersConnection({}, ` { aggregate { count } } `);
