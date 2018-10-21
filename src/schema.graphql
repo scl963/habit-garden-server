@@ -9,11 +9,12 @@ type Query {
   user(userId: ID!): User!
   users: [User!]
   habit: Habit!
-  habits(filter: String, skip: Int, first: Int, last: Int): [Habit!]
+  habits(skip: Int, first: Int, last: Int): [Habit!]
   dailyInput: DailyInput
-  inputs(filter: String, skip: Int, first: Int, last: Int): [DailyInput!]
+  inputs(skip: Int, first: Int, last: Int): [DailyInput!]
   _usersMeta: AggregateUser!
   _habitsMeta: AggregateHabit!
+  _inputsMeta: AggregateDailyInput!
 }
 
 type Mutation {

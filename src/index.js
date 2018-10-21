@@ -27,24 +27,11 @@ const resolvers = {
       return context.db.query.users({}, info);
     },
     habits: (root, args, context, info) => {
-      const where = args.filter
-        ? {
-            OR: [{ url_contains: args.filter }, { description_contains: args.filter }],
-          }
-        : {};
-      return context.db.query.habits(
-        { where, skip: args.skip, first: args.first, last: args.last },
-        info,
-      );
+      return context.db.query.habits({ skip: args.skip, first: args.first, last: args.last }, info);
     },
     inputs: (root, args, context, info) => {
-      const where = args.filter
-        ? {
-            OR: [{ url_contains: args.filter }, { description_contains: args.filter }],
-          }
-        : {};
       return context.db.query.dailyInputs(
-        { where, skip: args.skip, first: args.first, last: args.last },
+        { skip: args.skip, first: args.first, last: args.last },
         info,
       );
     },
@@ -54,6 +41,10 @@ const resolvers = {
     },
     _habitsMeta: async (root, args, context, info) => {
       const data = await context.db.query.habitsConnection({}, ` { aggregate { count } } `);
+      return { count: data.aggregate.count };
+    },
+    _inputsMeta: async (root, args, context, info) => {
+      const data = await context.db.query.dailyInputsConnection({}, ` { aggregate { count } } `);
       return { count: data.aggregate.count };
     },
   },
