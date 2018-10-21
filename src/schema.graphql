@@ -9,7 +9,7 @@ type Query {
   user(userId: ID!): User!
   users: [User!]
   habit: Habit!
-  habits(userId: ID!, skip: Int, first: Int, last: Int): [Habit!]
+  habits(skip: Int, first: Int, last: Int): [Habit!]
   dailyInput: DailyInput
   inputs(skip: Int, first: Int, last: Int): [DailyInput!]
   _usersMeta: AggregateUser!
