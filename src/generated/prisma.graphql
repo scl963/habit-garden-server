@@ -1,5 +1,5 @@
 # source: https://habit-tracker-prisma-server.herokuapp.com
-# timestamp: Tue Oct 09 2018 19:02:43 GMT-0400 (EDT)
+# timestamp: Sun Oct 21 2018 12:19:39 GMT-0400 (EDT)
 
 type AggregateDailyInput {
   count: Int!
@@ -21,6 +21,7 @@ type BatchPayload {
 type DailyInput implements Node {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   habit(where: HabitWhereInput): Habit!
   date: DateTime!
   amount: Float!
@@ -66,17 +67,18 @@ enum DailyInputOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   date_ASC
   date_DESC
   amount_ASC
   amount_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type DailyInputPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   date: DateTime!
   amount: Float!
 }
@@ -222,6 +224,28 @@ input DailyInputWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   date: DateTime
 
   """All values that are not equal to given value."""
@@ -278,6 +302,7 @@ scalar DateTime
 type Habit implements Node {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   user(where: UserWhereInput): User!
   name: String!
   inputs(where: DailyInputWhereInput, orderBy: DailyInputOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyInput!]
@@ -333,15 +358,16 @@ enum HabitOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  name_ASC
-  name_DESC
   updatedAt_ASC
   updatedAt_DESC
+  name_ASC
+  name_DESC
 }
 
 type HabitPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
 }
 
@@ -504,6 +530,28 @@ input HabitWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -636,6 +684,7 @@ type User implements Node {
   id: ID!
   password: String!
   createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   firstName: String
   habits(where: HabitWhereInput, orderBy: HabitOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Habit!]
@@ -685,18 +734,19 @@ enum UserOrderByInput {
   password_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   email_ASC
   email_DESC
   firstName_ASC
   firstName_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   password: String!
   createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   firstName: String
 }
@@ -877,6 +927,28 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   email: String
 
   """All values that are not equal to given value."""
