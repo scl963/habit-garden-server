@@ -150,7 +150,7 @@ let server = new GraphQLServer({
     ...req,
     db: new Prisma({
       typeDefs: 'src/generated/prisma.graphql',
-      endpoint: 'https://habit-tracker-prisma-server.herokuapp.com',
+      endpoint: process.env.PRISMA_ENDPOINT,
       secret: process.env.API_SECRET,
       debug: true,
     }),
